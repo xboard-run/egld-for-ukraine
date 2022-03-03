@@ -1,0 +1,150 @@
+{
+  "name": "Several donations",
+  "comment": "donor1 donates 20B +  donor2 donates 30B + donor3 donates 40B + donor1 donates 50B + sc sends funds to distribution address",
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "setup/setup.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1 donates 20B",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "20,000,000,000",
+        "arguments": [
+          "str:donor1 handle",
+          "str:donor1_twitter",
+          "str:I hope my contribution will be helpful"
+        ],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor2 donates 30B",
+      "tx": {
+        "from": "address:donor2",
+        "to": "sc:donation",
+        "value": "30,000,000,000",
+        "arguments": ["", "", ""],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor3 donates 40B",
+      "tx": {
+        "from": "address:donor3",
+        "to": "sc:donation",
+        "value": "40,000,000,000",
+        "arguments": ["", "", ""],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1 donates 50B",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "50,000,000,000",
+        "arguments": ["", "", ""],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "sendFundsToDistributionAddress",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "arguments": [],
+        "function": "sendEgldsToDistributionAddress",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "sc:donation": {
+          "balance": "0",
+          "esdt": {
+            "str:NFT-000001": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            }
+          },
+          "code": "*",
+          "storage": "*"
+        },
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "9,930,000,000,000",
+          "esdt": {
+            "str:TOKEN-abcdef": "1,000,000,000"
+          }
+        },
+        "address:donor2": {
+          "nonce": "*",
+          "balance": "9,970,000,000,000",
+          "esdt": {
+            "str:TOKEN-abcdef": "1,000,000,000"
+          }
+        },
+        "address:donor3": {
+          "nonce": "*",
+          "balance": "9,960,000,000,000",
+          "esdt": {
+            "str:TOKEN-abcdef": "1,000,000,000"
+          }
+        },
+        "address:distribution_address": {
+          "nonce": "*",
+          "balance": "140,000,000,000"
+        },
+        "+": ""
+      }
+    }
+  ]
+}

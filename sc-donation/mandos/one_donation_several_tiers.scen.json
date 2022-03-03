@@ -1,0 +1,237 @@
+{
+  "name": "Several tiers",
+  "comment": "setup sc with more tiers + donor1 donates 200B to get NFT tier 1 and NFT tiers 2 + donor1 donates extra 100B + donor1 donates 700B to get NFT tier 3 and NFT tier 4 + donor 1 donates extra 500B + sc sends funds to distribution address",
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "setup/setup.json"
+    },
+    {
+      "step": "setState",
+      "accounts": {
+        "sc:donation": {
+          "nonce": "0",
+          "esdt": {
+            "str:NFT-000001": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000002": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000003": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000004": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            }
+          },
+          "storage": {
+            "str:total_donation": "0",
+            "str:min_donation": "1,000,000,000",
+            "str:num_donors": "0",
+            "str:state": "1",
+            "str:distribution_address": "address:distribution_address",
+            "str:tier_thresholds|1": "100,000,000,000",
+            "str:tier_thresholds|2": "200,000,000,000",
+            "str:tier_thresholds|3": "500,000,000,000",
+            "str:tier_thresholds|4": "1,000,000,000,000",
+            "str:max_tier": "4",
+            "str:nft_ids|1": "str:NFT-000001",
+            "str:nft_ids|2": "str:NFT-000002",
+            "str:nft_ids|3": "str:NFT-000003",
+            "str:nft_ids|4": "str:NFT-000004"
+          },
+          "code": "file:../output/donation.wasm",
+          "owner": "address:deployer"
+        }
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1 donates 200B to get NFT tier 1 and NFT tier 2",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "200,000,000,000",
+        "arguments": [
+          "str:donor1 ",
+          "str:donor1_twitter",
+          "str:I want two NFTs"
+        ],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": ["1", "1"],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1 extra 100B",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "100,000,000,000",
+        "arguments": ["", "", ""],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "sc:donation": {
+          "balance": "300,000,000,000",
+          "esdt": {
+            "str:NFT-000001": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000002": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000003": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000004": {
+              "lastNonce": "0",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            }
+          },
+          "code": "*",
+          "storage": "*"
+        },
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "9,700,000,000,000",
+          "esdt": {
+            "str:TOKEN-abcdef": "1,000,000,000",
+            "str:NFT-000001": {
+              "balance": "1",
+              "nonce": "1"
+            },
+            "str:NFT-000002": {
+              "balance": "1",
+              "nonce": "1"
+            }
+          }
+        },
+        "address:distribution_address": {
+          "nonce": "*",
+          "balance": "0"
+        },
+        "+": ""
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1 donates 700B to get NFT tier 3 and NFT tier 4",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "700,000,000,000",
+        "arguments": ["", "", "str:I want NFT tier 3 and NFT tier 4"],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": ["1", "1"],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "sendFundsToDistributionAddress",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "arguments": [],
+        "function": "sendEgldsToDistributionAddress",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "out": [],
+        "gas": "*",
+        "refund": "*"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "sc:donation": {
+          "balance": "0",
+          "esdt": {
+            "str:NFT-000001": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000002": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000003": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            },
+            "str:NFT-000004": {
+              "lastNonce": "1",
+              "roles": ["ESDTRoleNFTCreate", "ESDTRoleNFTBurn"]
+            }
+          },
+          "code": "*",
+          "storage": "*"
+        },
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "9,000,000,000,000",
+          "esdt": {
+            "str:TOKEN-abcdef": "1,000,000,000",
+            "str:NFT-000001": {
+              "balance": "1",
+              "nonce": "1"
+            },
+            "str:NFT-000002": {
+              "balance": "1",
+              "nonce": "1"
+            },
+            "str:NFT-000003": {
+              "balance": "1",
+              "nonce": "1"
+            },
+            "str:NFT-000004": {
+              "balance": "1",
+              "nonce": "1"
+            }
+          }
+        },
+        "address:distribution_address": {
+          "nonce": "*",
+          "balance": "1,000,000,000,000"
+        },
+        "+": ""
+      }
+    }
+  ]
+}
