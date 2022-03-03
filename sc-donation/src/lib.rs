@@ -217,7 +217,6 @@ pub trait Donation
     }
   }
 
-  #[allow(clippy::manual_range_contains)]
   fn _is_valid_pseudo_char(&self, ch: u8) -> bool {
     if ch >= b'a' && ch <= b'z' {
       return true;
@@ -234,7 +233,6 @@ pub trait Donation
     false
   }
 
-  #[allow(clippy::manual_range_contains)]
   fn _is_valid_twitter_handle_char(&self, ch: u8) -> bool {
     if ch >= b'a' && ch <= b'z' {
       return true;
@@ -251,7 +249,6 @@ pub trait Donation
     false
   }
 
-  #[allow(clippy::manual_range_contains)]
   fn _is_valid_message_char(&self, ch: u8) -> bool {
     if ch >= b'a' && ch <= b'z' {
       return true;
