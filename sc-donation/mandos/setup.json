@@ -1,0 +1,163 @@
+{
+  "steps": [
+    {
+      "step": "setState",
+      "accounts": {
+        "address:deployer": {
+          "balance": "10,000,000,000,000"
+        },
+        "address:distribution_address": {
+          "balance": "0"
+        },
+        "address:donor1": {
+          "balance": "10,000,000,000,000"
+        },
+        "address:donor2": {
+          "balance": "10,000,000,000,000"
+        }
+      }
+    },
+    {
+      "step": "setState",
+      "newAddresses": [
+        {
+          "creatorAddress": "address:deployer",
+          "creatorNonce": "0",
+          "newAddress": "sc:donation"
+        }
+      ]
+    },
+    {
+      "step": "scDeploy",
+      "txId": "deploy-donation-sc",
+      "tx": {
+        "from": "address:deployer",
+        "contractCode": "file:../output/donation.wasm",
+        "arguments": [
+          "100",
+          "nested:100|nested:1000|nested:3000",
+          "3",
+          "address:distribution_address",
+          "str:TIERSFT-abcdef"
+        ],
+        "gasLimit": "100,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "activate-donations",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "setDonationState",
+        "arguments": ["1"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "activate-minting",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "setMintingState",
+        "arguments": ["1"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:deployer": {
+          "nonce": "*",
+          "balance": "10,000,000,000,000"
+        },
+        "address:distribution_address": {
+          "nonce": "*",
+          "balance": "0"
+        },
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "10,000,000,000,000"
+        },
+        "address:donor2": {
+          "nonce": "*",
+          "balance": "10,000,000,000,000"
+        },
+        "sc:donation": {
+          "nonce": "*",
+          "balance": "0",
+          "storage": {
+            "str:min_donation": "100",
+            "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
+            "str:max_donation_destination_id": "3",
+            "str:distribution_address": "address:distribution_address",
+            "str:collection": "str:TIERSFT-abcdef",
+            "str:donation_state": "1",
+            "str:minting_state": "1"
+          },
+          "code": "file:../output/donation.wasm",
+          "owner": "address:deployer"
+        }
+      }
+    },
+    {
+      "step": "setState",
+      "accounts": {
+        "address:deployer": {
+          "nonce": "0",
+          "balance": "10,000,000,000,000"
+        },
+        "address:distribution_address": {
+          "nonce": "0",
+          "balance": "0"
+        },
+        "address:donor1": {
+          "nonce": "0",
+          "balance": "10,000,000,000,000"
+        },
+        "address:donor2": {
+          "nonce": "0",
+          "balance": "10,000,000,000,000"
+        },
+        "sc:donation": {
+          "nonce": "0",
+          "balance": "0",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "roles": ["ESDTRoleNFTAddQuantity"],
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" }
+              ]
+            }
+          },
+          "storage": {
+            "str:min_donation": "100",
+            "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
+            "str:max_donation_destination_id": "3",
+            "str:distribution_address": "address:distribution_address",
+            "str:collection": "str:TIERSFT-abcdef",
+            "str:donation_state": "1",
+            "str:minting_state": "1"
+          },
+          "code": "file:../output/donation.wasm",
+          "owner": "address:deployer"
+        }
+      }
+    }
+  ]
+}

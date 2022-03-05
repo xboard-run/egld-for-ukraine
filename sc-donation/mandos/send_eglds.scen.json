@@ -1,0 +1,38 @@
+{
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "multiple_donations.scen.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "send-eglds-to-distribution-address",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "sendEgldsToDistributionAddress",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:distribution_address": {
+          "nonce": "*",
+          "balance": "3,100"
+        },
+        "sc:donation": {
+          "balance": "0",
+          "esdt": "*",
+          "code": "*",
+          "storage": "*"
+        },
+        "+": ""
+      }
+    }
+  ]
+}

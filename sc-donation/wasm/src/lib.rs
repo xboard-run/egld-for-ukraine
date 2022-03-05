@@ -7,13 +7,16 @@
 elrond_wasm_node::wasm_endpoints! {
     donation
     (
-        callBack
         donate
-        issueNFT
+        mintTierNfts
         sendEgldsToDistributionAddress
         setDistributionAddress
-        setLocalRoles
-        setState
-        setTierThreshold
+        setDonationState
+        setMaxDonationDestinationId
+        setMinDonation
+        setMintingState
+        setTierThresholds
     )
 }
+
+elrond_wasm_node::wasm_empty_callback! {}

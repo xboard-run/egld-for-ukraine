@@ -1,6 +1,5 @@
 [package]
 name = "donation-abi"
-
 version = "0.0.0"
 edition = "2018"
 publish = false
@@ -9,7 +8,7 @@ publish = false
 path = ".."
 
 [dependencies.elrond-wasm]
-version = "0.28.0"
+version = "0.29.2"
 
 [dependencies.elrond-wasm-debug]
-version = "0.28.0"
+version = "0.29.2"

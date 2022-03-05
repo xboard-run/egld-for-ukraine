@@ -1,0 +1,76 @@
+{
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "setup.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "too-small-donation",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "50",
+        "arguments": ["", "", "", "0"],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Donation too small"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "pseudo-invalid-character",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "100",
+        "arguments": ["str:pseudo-long", "", "", "0"],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Invalid character found in pseudo"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "pseudo-too-long",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "100",
+        "arguments": ["str:pseudo_too_too_long", "", "", "0"],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Pseudo too long"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "invalid-donation-destination-id",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "value": "100",
+        "arguments": ["", "", "", "4"],
+        "function": "donate",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Invalid donation destination id"
+      }
+    }
+  ]
+}

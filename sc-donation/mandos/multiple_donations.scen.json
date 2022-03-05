@@ -1,0 +1,107 @@
+{
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "setup.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1-donation1",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "function": "donate",
+        "value": "500",
+        "arguments": [
+          "str:donor1 pseudo1",
+          "str:donor1_handle1",
+          "str:donor1 message1",
+          "0"
+        ],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor2-donation1",
+      "tx": {
+        "from": "address:donor2",
+        "to": "sc:donation",
+        "function": "donate",
+        "value": "100",
+        "arguments": ["", "", "", "3"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1-donation2",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "function": "donate",
+        "value": "2,500",
+        "arguments": [
+          "str:donor1 pseudo2",
+          "str:donor1_handle2",
+          "str:donor1 message2",
+          "1"
+        ],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "9,999,999,997,000"
+        },
+        "address:donor2": {
+          "nonce": "*",
+          "balance": "9,999,999,999,900"
+        },
+        "sc:donation": {
+          "balance": "3,100",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "roles": ["ESDTRoleNFTAddQuantity"],
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" }
+              ]
+            }
+          },
+          "code": "*",
+          "storage": {
+            "str:min_donation": "100",
+            "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
+            "str:max_donation_destination_id": "3",
+            "str:distribution_address": "address:distribution_address",
+            "str:collection": "str:TIERSFT-abcdef",
+            "str:donation_state": "1",
+            "str:minting_state": "1",
+            "str:donors_data|address:donor1": "u64:1|nested:str:donor1 pseudo2|nested:str:donor1_handle2|nested:str:donor1 message2|u8:1|nested:3000|u8:0",
+            "str:donors_data|address:donor2": "u64:2|nested:str:|nested:str:|nested:str:|u8:3|nested:100|u8:0",
+            "str:total_donation": "3,100",
+            "str:num_donors": "2"
+          }
+        },
+        "+": ""
+      }
+    }
+  ]
+}
