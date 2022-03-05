@@ -258,7 +258,7 @@ fn is_valid_message_char(ch: u8) -> bool {
 
 const PSEUDO_MAX_LENGTH: usize = 15;
 const TWITTER_HANDLE_MAX_LENGTH: usize = 15;
-const MESSAGE_MAX_LENGTH: usize = 180;
+const MESSAGE_MAX_LENGTH: usize = 100;
 
 #[derive(TopEncode, TopDecode, NestedEncode, NestedDecode, TypeAbi, Clone, PartialEq)]
 pub struct DonorData<M: ManagedTypeApi> {
