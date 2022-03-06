@@ -248,9 +248,8 @@ fn is_valid_message_char(ch: u8) -> bool {
   if ch >= b'0' && ch <= b'9' {
     return true;
   }
-  if ch == b' ' || ch == b'(' || ch == b')' || ch == b'!' || ch == b'?'
-    || ch == b'"' || ch == b'\'' || ch == b',' || ch == b'.' || ch == b':'
-    || ch == b'$' || ch == b'%' || ch == b'-' || ch == b'/' {
+  if ch == b' ' || ch == b'!' || ch == b'?' || ch == b'\'' || ch == b','
+    || ch == b'.' || ch == b':' || ch == b'$' || ch == b'%' || ch == b'-' {
     return true
   }
   false
