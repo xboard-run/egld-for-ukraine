@@ -1,0 +1,146 @@
+{
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "mint_tier_nfts.scen.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "update-thresholds",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "setTierThresholds",
+        "arguments": ["nested:10|nested:50|nested:100|nested:3000"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "checkState",
+      "accounts": {
+        "sc:donation": {
+          "balance": "*",
+          "esdt": "*",
+          "code": "*",
+          "storage": {
+            "str:tier_thresholds": "nested:10|nested:50|nested:100|nested:3000",
+            "str:donors_data|address:donor1": "u64:1|nested:str:donor1 pseudo2|nested:str:donor1_handle2|nested:str:donor1 message2|u8:1|nested:3000|u8:3",
+            "str:donors_data|address:donor2": "u64:2|nested:str:|nested:str:|nested:str:|u8:3|nested:100|u8:1",
+            "+": ""
+          }
+        },
+        "+": ""
+      }
+    },
+    {
+      "step": "setState",
+      "accounts": {
+        "sc:donation": {
+          "nonce": "0",
+          "balance": "0",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "roles": ["ESDTRoleNFTAddQuantity"],
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" },
+                { "nonce": "4", "balance": "1" }
+              ]
+            }
+          },
+          "storage": {
+            "str:min_donation": "100",
+            "str:tier_thresholds": "nested:10|nested:50|nested:100|nested:3000",
+            "str:max_donation_destination_id": "3",
+            "str:distribution_address": "address:distribution_address",
+            "str:collection": "str:TIERSFT-abcdef",
+            "str:donation_state": "1",
+            "str:minting_state": "1",
+            "str:donors_data|address:donor1": "u64:1|nested:str:donor1 pseudo2|nested:str:donor1_handle2|nested:str:donor1 message2|u8:1|nested:3000|u8:3",
+            "str:donors_data|address:donor2": "u64:2|nested:str:|nested:str:|nested:str:|u8:3|nested:100|u8:1"
+          },
+          "code": "file:../output/donation.wasm",
+          "owner": "address:deployer"
+        }
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor1-mintTierNfts",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "function": "mintTierNfts",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "donor2-mintTierNfts",
+      "tx": {
+        "from": "address:donor2",
+        "to": "sc:donation",
+        "function": "mintTierNfts",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+
+    {
+      "step": "checkState",
+      "accounts": {
+        "address:donor1": {
+          "nonce": "*",
+          "balance": "*",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" },
+                { "nonce": "4", "balance": "1" }
+              ]
+            }
+          }
+        },
+        "address:donor2": {
+          "nonce": "*",
+          "balance": "*",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" }
+              ]
+            }
+          }
+        },
+        "sc:donation": {
+          "balance": "*",
+          "esdt": "*",
+          "code": "*",
+          "storage": {
+            "str:tier_thresholds": "nested:10|nested:50|nested:100|nested:3000",
+            "str:donors_data|address:donor1": "u64:1|nested:str:donor1 pseudo2|nested:str:donor1_handle2|nested:str:donor1 message2|u8:1|nested:3000|u8:4",
+            "str:donors_data|address:donor2": "u64:2|nested:str:|nested:str:|nested:str:|u8:3|nested:100|u8:3",
+            "+": ""
+          }
+        },
+        "+": ""
+      }
+    }
+  ]
+}
