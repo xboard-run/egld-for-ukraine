@@ -8,7 +8,7 @@
       "step": "scCall",
       "txId": "deactivate-minting",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "setMintingState",
         "arguments": ["0"],
@@ -39,7 +39,7 @@
       "step": "scCall",
       "txId": "deactivate-donation",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "setDonationState",
         "arguments": ["0"],

@@ -10,8 +10,7 @@ elrond_wasm_node::wasm_endpoints! {
         donate
         initMinting
         mintTierNfts
-        sendEgldsToDistributionAddress
-        setDistributionAddress
+        sendEgldsToOwner
         setDonationState
         setMaxDonationDestinationId
         setMinDonation

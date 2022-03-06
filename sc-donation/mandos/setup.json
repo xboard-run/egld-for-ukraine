@@ -3,10 +3,7 @@
     {
       "step": "setState",
       "accounts": {
-        "address:deployer": {
-          "balance": "10,000,000,000,000"
-        },
-        "address:distribution_address": {
+        "address:owner": {
           "balance": "0"
         },
         "address:donor1": {
@@ -21,7 +18,7 @@
       "step": "setState",
       "newAddresses": [
         {
-          "creatorAddress": "address:deployer",
+          "creatorAddress": "address:owner",
           "creatorNonce": "0",
           "newAddress": "sc:donation"
         }
@@ -31,9 +28,9 @@
       "step": "scDeploy",
       "txId": "deploy-donation-sc",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "contractCode": "file:../output/donation.wasm",
-        "arguments": ["100", "3", "address:distribution_address"],
+        "arguments": ["100", "3"],
         "gasLimit": "100,000,000",
         "gasPrice": "0"
       },
@@ -45,7 +42,7 @@
       "step": "scCall",
       "txId": "activate-donations",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "setDonationState",
         "arguments": ["1"],
@@ -60,7 +57,7 @@
       "step": "scCall",
       "txId": "init-minting",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "initMinting",
         "arguments": [
@@ -78,7 +75,7 @@
       "step": "scCall",
       "txId": "activate-minting",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "setMintingState",
         "arguments": ["1"],
@@ -92,11 +89,7 @@
     {
       "step": "checkState",
       "accounts": {
-        "address:deployer": {
-          "nonce": "*",
-          "balance": "10,000,000,000,000"
-        },
-        "address:distribution_address": {
+        "address:owner": {
           "nonce": "*",
           "balance": "0"
         },
@@ -115,24 +108,19 @@
             "str:min_donation": "100",
             "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
             "str:max_donation_destination_id": "3",
-            "str:distribution_address": "address:distribution_address",
             "str:collection": "str:TIERSFT-abcdef",
             "str:donation_state": "1",
             "str:minting_state": "1"
           },
           "code": "file:../output/donation.wasm",
-          "owner": "address:deployer"
+          "owner": "address:owner"
         }
       }
     },
     {
       "step": "setState",
       "accounts": {
-        "address:deployer": {
-          "nonce": "0",
-          "balance": "10,000,000,000,000"
-        },
-        "address:distribution_address": {
+        "address:owner": {
           "nonce": "0",
           "balance": "0"
         },
@@ -161,13 +149,12 @@
             "str:min_donation": "100",
             "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
             "str:max_donation_destination_id": "3",
-            "str:distribution_address": "address:distribution_address",
             "str:collection": "str:TIERSFT-abcdef",
             "str:donation_state": "1",
             "str:minting_state": "1"
           },
           "code": "file:../output/donation.wasm",
-          "owner": "address:deployer"
+          "owner": "address:owner"
         }
       }
     }

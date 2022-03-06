@@ -8,7 +8,7 @@
       "step": "scCall",
       "txId": "update-thresholds",
       "tx": {
-        "from": "address:deployer",
+        "from": "address:owner",
         "to": "sc:donation",
         "function": "setTierThresholds",
         "arguments": ["nested:10|nested:50|nested:100|nested:3000"],
@@ -57,7 +57,6 @@
             "str:min_donation": "100",
             "str:tier_thresholds": "nested:10|nested:50|nested:100|nested:3000",
             "str:max_donation_destination_id": "3",
-            "str:distribution_address": "address:distribution_address",
             "str:collection": "str:TIERSFT-abcdef",
             "str:donation_state": "1",
             "str:minting_state": "1",
@@ -65,7 +64,7 @@
             "str:donors_data|address:donor2": "u64:2|nested:str:|nested:str:|nested:str:|u8:3|nested:100|u8:1"
           },
           "code": "file:../output/donation.wasm",
-          "owner": "address:deployer"
+          "owner": "address:owner"
         }
       }
     },

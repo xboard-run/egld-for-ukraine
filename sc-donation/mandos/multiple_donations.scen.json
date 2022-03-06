@@ -90,7 +90,6 @@
             "str:min_donation": "100",
             "str:tier_thresholds": "nested:100|nested:1000|nested:3000",
             "str:max_donation_destination_id": "3",
-            "str:distribution_address": "address:distribution_address",
             "str:collection": "str:TIERSFT-abcdef",
             "str:donation_state": "1",
             "str:minting_state": "1",

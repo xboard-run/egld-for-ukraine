@@ -11,20 +11,17 @@ pub trait Donation
     &self,
     min_donation: BigUint,
     max_donation_destination_id: DonationDestinationId,
-    distribution_address: ManagedAddress,
   ) {
-    self.init_donation(min_donation, max_donation_destination_id, distribution_address);
+    self.init_donation(min_donation, max_donation_destination_id);
   }
 
   fn init_donation(
     &self,
     min_donation: BigUint,
     max_donation_destination_id: DonationDestinationId,
-    distribution_address: ManagedAddress,
   ) {
     self.min_donation().set(&min_donation);
     self.max_donation_destination_id().set(&max_donation_destination_id);
-    self.distribution_address().set(&distribution_address);
   }
 
   #[only_owner]
@@ -152,12 +149,11 @@ pub trait Donation
   }
 
   #[only_owner]
-  #[endpoint(sendEgldsToDistributionAddress)]
-  fn send_eglds_to_distribution_address(&self) {
-    require!(!self.distribution_address().is_empty(), "No specified distribution address");
+  #[endpoint(sendEgldsToOwner)]
+  fn send_eglds_to_owner(&self) {
     let egld_id = TokenIdentifier::egld();
     let egld_amount = self.blockchain().get_sc_balance(&egld_id, 0);
-    self.send().direct(&self.distribution_address().get(), &egld_id, 0, &egld_amount, &[]);
+    self.send().direct(&self.blockchain().get_owner_address(), &egld_id, 0, &egld_amount, &[]);
   }
 
   #[only_owner]
@@ -170,12 +166,6 @@ pub trait Donation
   #[endpoint(setMaxDonationDestinationId)]
   fn set_max_donation_destination_id(&self, max_donation_destination_id: DonationDestinationId) {
     self.max_donation_destination_id().set(&max_donation_destination_id);
-  }
-
-  #[only_owner]
-  #[endpoint(setDistributionAddress)]
-  fn set_distribution_address(&self, distribution_address: ManagedAddress) {
-    self.distribution_address().set(&distribution_address);
   }
 
   #[only_owner]
@@ -208,9 +198,6 @@ pub trait Donation
 
   #[storage_mapper("max_donation_destination_id")]
   fn max_donation_destination_id(&self) -> SingleValueMapper<DonationDestinationId>;
-
-  #[storage_mapper("distribution_address")]
-  fn distribution_address(&self) -> SingleValueMapper<ManagedAddress>;
 
   #[storage_mapper("collection")]
   fn collection(&self) -> NonFungibleTokenMapper<Self::Api>;
