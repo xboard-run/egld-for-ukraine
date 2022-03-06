@@ -10,16 +10,32 @@ pub trait Donation
   fn init(
     &self,
     min_donation: BigUint,
-    tier_thresholds: ManagedVec<BigUint>,
     max_donation_destination_id: DonationDestinationId,
     distribution_address: ManagedAddress,
-    collection_id: TokenIdentifier,
+  ) {
+    self.init_donation(min_donation, max_donation_destination_id, distribution_address);
+  }
+
+  fn init_donation(
+    &self,
+    min_donation: BigUint,
+    max_donation_destination_id: DonationDestinationId,
+    distribution_address: ManagedAddress,
   ) {
     self.min_donation().set(&min_donation);
-    self.tier_thresholds().set(&tier_thresholds);
     self.max_donation_destination_id().set(&max_donation_destination_id);
     self.distribution_address().set(&distribution_address);
+  }
+
+  #[only_owner]
+  #[endpoint(initMinting)]
+  fn init_minting(
+    &self,
+    collection_id: TokenIdentifier,
+    tier_thresholds: ManagedVec<BigUint>,
+  ) {
     self.collection().set_token_id(&collection_id);
+    self.tier_thresholds().set(&tier_thresholds);
   }
 
   #[payable("EGLD")]
@@ -144,37 +160,38 @@ pub trait Donation
     self.send().direct(&self.distribution_address().get(), &egld_id, 0, &egld_amount, &[]);
   }
 
-  #[endpoint(setMinDonation)]
   #[only_owner]
+  #[endpoint(setMinDonation)]
   fn set_min_donation(&self, min_donation: BigUint) {
     self.min_donation().set(&min_donation);
   }
 
-  #[endpoint(setTierThresholds)]
   #[only_owner]
-  fn set_tier_thresholds(&self, tier_thresholds: ManagedVec<BigUint>) {
-    self.tier_thresholds().set(&tier_thresholds);
-  }
-
   #[endpoint(setMaxDonationDestinationId)]
   fn set_max_donation_destination_id(&self, max_donation_destination_id: DonationDestinationId) {
     self.max_donation_destination_id().set(&max_donation_destination_id);
   }
 
-  #[endpoint(setDistributionAddress)]
   #[only_owner]
+  #[endpoint(setDistributionAddress)]
   fn set_distribution_address(&self, distribution_address: ManagedAddress) {
     self.distribution_address().set(&distribution_address);
   }
 
-  #[endpoint(setDonationState)]
   #[only_owner]
+  #[endpoint(setTierThresholds)]
+  fn set_tier_thresholds(&self, tier_thresholds: ManagedVec<BigUint>) {
+    self.tier_thresholds().set(&tier_thresholds);
+  }
+
+  #[only_owner]
+  #[endpoint(setDonationState)]
   fn set_donation_state(&self, donation_state: DonationState) {
     self.donation_state().set(&donation_state);
   }
 
-  #[endpoint(setMintingState)]
   #[only_owner]
+  #[endpoint(setMintingState)]
   fn set_minting_state(&self, minting_state: MintingState) {
     self.minting_state().set(&minting_state);
   }
@@ -189,9 +206,6 @@ pub trait Donation
   #[storage_mapper("min_donation")]
   fn min_donation(&self) -> SingleValueMapper<BigUint>;
 
-  #[storage_mapper("tier_thresholds")]
-  fn tier_thresholds(&self) -> SingleValueMapper<ManagedVec<BigUint>>;
-
   #[storage_mapper("max_donation_destination_id")]
   fn max_donation_destination_id(&self) -> SingleValueMapper<DonationDestinationId>;
 
@@ -200,6 +214,9 @@ pub trait Donation
 
   #[storage_mapper("collection")]
   fn collection(&self) -> NonFungibleTokenMapper<Self::Api>;
+
+  #[storage_mapper("tier_thresholds")]
+  fn tier_thresholds(&self) -> SingleValueMapper<ManagedVec<BigUint>>;
 
   #[storage_mapper("donation_state")]
   fn donation_state(&self) -> SingleValueMapper<DonationState>;

@@ -8,6 +8,7 @@ elrond_wasm_node::wasm_endpoints! {
     donation
     (
         donate
+        initMinting
         mintTierNfts
         sendEgldsToDistributionAddress
         setDistributionAddress

@@ -33,13 +33,7 @@
       "tx": {
         "from": "address:deployer",
         "contractCode": "file:../output/donation.wasm",
-        "arguments": [
-          "100",
-          "nested:100|nested:1000|nested:3000",
-          "3",
-          "address:distribution_address",
-          "str:TIERSFT-abcdef"
-        ],
+        "arguments": ["100", "3", "address:distribution_address"],
         "gasLimit": "100,000,000",
         "gasPrice": "0"
       },
@@ -55,6 +49,24 @@
         "to": "sc:donation",
         "function": "setDonationState",
         "arguments": ["1"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "init-minting",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "initMinting",
+        "arguments": [
+          "str:TIERSFT-abcdef",
+          "nested:100|nested:1000|nested:3000"
+        ],
         "gasLimit": "1,000,000,000",
         "gasPrice": "0"
       },
