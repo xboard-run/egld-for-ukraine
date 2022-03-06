@@ -67,7 +67,15 @@ pub trait Donation
     self.donors_data(&donor_address).set(donor_data);
     let total_donation = self.total_donation().get();
     self.total_donation().set(total_donation + donation.clone());
-    self.donation_event(donor_address, donation);
+    self.donation_event(
+      &donor_address,
+      &DonationEvent {
+        donor_address: donor_address.clone(),
+        donation: donation,
+        donation_destination_id: donation_destination_id,
+        timestamp: self.blockchain().get_block_timestamp(),
+      },
+    );
   }
 
   fn require_valid_pseudo(&self, pseudo: ManagedBuffer) {
@@ -172,7 +180,11 @@ pub trait Donation
   }
 
   #[event("donation")]
-  fn donation_event(&self, #[indexed] donor_address: ManagedAddress, amount: BigUint);
+  fn donation_event(
+    &self,
+    #[indexed] donor_address: &ManagedAddress,
+    donation_event: &DonationEvent<Self::Api>,
+  );
 
   #[storage_mapper("min_donation")]
   fn min_donation(&self) -> SingleValueMapper<BigUint>;
@@ -279,6 +291,14 @@ pub enum DonationState {
 pub enum MintingState {
   Inactive,
   Active,
+}
+
+#[derive(TopEncode)]
+pub struct DonationEvent<M: ManagedTypeApi> {
+  donor_address: ManagedAddress<M>,
+  donation: BigUint<M>,
+  donation_destination_id: DonationDestinationId,
+  timestamp: u64,
 }
 
 type DonationDestinationId = u8;
