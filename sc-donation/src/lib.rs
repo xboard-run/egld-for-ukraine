@@ -49,19 +49,18 @@ pub trait Donation
           twitter_handle: twitter_handle,
           message: message,
           donation_destination_id: donation_destination_id,
-          total_donation: donation.clone(),
+          donation: donation.clone(),
           last_minted_tier_id: 0,
         }
       } else {
         let old_donor_data = self.donors_data(&donor_address).get();
-        let total_donation = old_donor_data.total_donation + donation.clone();
         DonorData {
           id: old_donor_data.id,
           pseudo: pseudo,
           twitter_handle: twitter_handle,
           message: message,
           donation_destination_id: donation_destination_id,
-          total_donation: total_donation,
+          donation: old_donor_data.donation + donation.clone(),
           last_minted_tier_id: old_donor_data.last_minted_tier_id,
         }
       };
@@ -111,7 +110,7 @@ pub trait Donation
     while usize::from(last_minted_tier_id) < tier_thresholds.len() {
       let tier_id_to_mint = last_minted_tier_id + 1;
       let tier_threshold = tier_thresholds.get(usize::from(tier_id_to_mint - 1));
-      if donor_data.total_donation < *tier_threshold {
+      if donor_data.donation < *tier_threshold {
         break;
       }
       self.collection().nft_add_quantity_and_send(&donor_address, u64::from(tier_id_to_mint), BigUint::from(1u64));
@@ -123,7 +122,7 @@ pub trait Donation
       twitter_handle: donor_data.twitter_handle,
       message: donor_data.message,
       donation_destination_id: donor_data.donation_destination_id,
-      total_donation: donor_data.total_donation,
+      donation: donor_data.donation,
       last_minted_tier_id: last_minted_tier_id,
     });
   }
@@ -266,7 +265,7 @@ pub struct DonorData<M: ManagedTypeApi> {
   twitter_handle: ManagedBuffer<M>,
   message: ManagedBuffer<M>,
   donation_destination_id: DonationDestinationId,
-  total_donation: BigUint<M>,
+  donation: BigUint<M>,
   last_minted_tier_id: TierId,
 }
 
