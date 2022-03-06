@@ -1,0 +1,72 @@
+{
+  "steps": [
+    {
+      "step": "externalSteps",
+      "path": "multiple_donations.scen.json"
+    },
+    {
+      "step": "scCall",
+      "txId": "deactivate-minting",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "setMintingState",
+        "arguments": ["0"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "refund": "0x3e8"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "inactive-minting-state-minting-fails",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "function": "mintTierNfts",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Minting not enabled"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "deactivate-donation",
+      "tx": {
+        "from": "address:deployer",
+        "to": "sc:donation",
+        "function": "setDonationState",
+        "arguments": ["0"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0",
+        "refund": "0x3e8"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "inactive-donation-state-donation-fails",
+      "tx": {
+        "from": "address:donor1",
+        "to": "sc:donation",
+        "function": "donate",
+        "value": "100",
+        "arguments": ["", "", "", "0"],
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "4",
+        "message": "str:Donations not enabled"
+      }
+    }
+  ]
+}
