@@ -29,10 +29,10 @@ pub trait Donation
   fn init_minting(
     &self,
     collection_id: TokenIdentifier,
-    tier_thresholds: ManagedVec<BigUint>,
+    #[var_args] tier_thresholds: MultiValueManagedVec<BigUint>,
   ) {
     self.collection().set_token_id(&collection_id);
-    self.tier_thresholds().set(&tier_thresholds);
+    self.tier_thresholds().set(&tier_thresholds.into_vec());
   }
 
   #[payable("EGLD")]
@@ -170,8 +170,10 @@ pub trait Donation
 
   #[only_owner]
   #[endpoint(setTierThresholds)]
-  fn set_tier_thresholds(&self, tier_thresholds: ManagedVec<BigUint>) {
-    self.tier_thresholds().set(&tier_thresholds);
+  fn set_tier_thresholds(&self,
+    #[var_args] tier_thresholds: MultiValueManagedVec<BigUint>
+  ) {
+    self.tier_thresholds().set(&tier_thresholds.into_vec());
   }
 
   #[only_owner]

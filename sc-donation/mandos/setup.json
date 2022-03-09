@@ -60,10 +60,7 @@
         "from": "address:owner",
         "to": "sc:donation",
         "function": "initMinting",
-        "arguments": [
-          "str:TIERSFT-abcdef",
-          "nested:100|nested:1000|nested:3000"
-        ],
+        "arguments": ["str:TIERSFT-abcdef", "100", "1000", "3000"],
         "gasLimit": "1,000,000,000",
         "gasPrice": "0"
       },
