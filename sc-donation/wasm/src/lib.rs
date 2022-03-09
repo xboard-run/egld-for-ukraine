@@ -7,6 +7,7 @@
 elrond_wasm_node::wasm_endpoints! {
     donation
     (
+        acceptTierNft
         donate
         initMinting
         mintTierNfts

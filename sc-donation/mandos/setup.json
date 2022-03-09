@@ -119,7 +119,16 @@
       "accounts": {
         "address:owner": {
           "nonce": "0",
-          "balance": "0"
+          "balance": "0",
+          "esdt": {
+            "str:TIERSFT-abcdef": {
+              "instances": [
+                { "nonce": "1", "balance": "1" },
+                { "nonce": "2", "balance": "1" },
+                { "nonce": "3", "balance": "1" }
+              ]
+            }
+          }
         },
         "address:donor1": {
           "nonce": "0",
@@ -134,12 +143,7 @@
           "balance": "0",
           "esdt": {
             "str:TIERSFT-abcdef": {
-              "roles": ["ESDTRoleNFTAddQuantity"],
-              "instances": [
-                { "nonce": "1", "balance": "1" },
-                { "nonce": "2", "balance": "1" },
-                { "nonce": "3", "balance": "1" }
-              ]
+              "roles": ["ESDTRoleNFTAddQuantity"]
             }
           },
           "storage": {

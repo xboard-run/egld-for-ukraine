@@ -77,12 +77,7 @@
           "balance": "3,100",
           "esdt": {
             "str:TIERSFT-abcdef": {
-              "roles": ["ESDTRoleNFTAddQuantity"],
-              "instances": [
-                { "nonce": "1", "balance": "1" },
-                { "nonce": "2", "balance": "1" },
-                { "nonce": "3", "balance": "1" }
-              ]
+              "roles": ["ESDTRoleNFTAddQuantity"]
             }
           },
           "code": "*",

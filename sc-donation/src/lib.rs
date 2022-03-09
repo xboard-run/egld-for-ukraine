@@ -121,6 +121,18 @@ pub trait Donation
     }
   }
 
+  #[payable("*")]
+  #[endpoint(acceptTierNft)]
+  fn accept_tier_nft(
+    &self,
+    #[payment_token] token_id: TokenIdentifier,
+    #[payment_nonce] token_nonce: u64,
+  ) {
+    require!(token_id == self.collection().get_token_id(), "Invalid token id");
+    let balance = self.blockchain().get_sc_balance(&token_id, token_nonce);
+    require!(balance == 1, "Invalid balance");
+  }
+
   #[endpoint(mintTierNfts)]
   fn mint_tier_nfts(&self) {
     require!(self.minting_state().get() == MintingState::Active, "Minting not enabled");

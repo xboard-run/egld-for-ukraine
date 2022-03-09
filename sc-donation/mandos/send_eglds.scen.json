@@ -23,6 +23,7 @@
       "accounts": {
         "address:owner": {
           "nonce": "*",
+          "esdt": "*",
           "balance": "3,100"
         },
         "sc:donation": {

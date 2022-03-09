@@ -6,6 +6,63 @@
     },
     {
       "step": "scCall",
+      "txId": "send-sft-1-to-sc",
+      "tx": {
+        "from": "address:owner",
+        "to": "sc:donation",
+        "esdt": {
+          "tokenIdentifier": "str:TIERSFT-abcdef",
+          "nonce": "1",
+          "value": "1"
+        },
+        "function": "acceptTierNft",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "send-sft-2-to-sc",
+      "tx": {
+        "from": "address:owner",
+        "to": "sc:donation",
+        "esdt": {
+          "tokenIdentifier": "str:TIERSFT-abcdef",
+          "nonce": "2",
+          "value": "1"
+        },
+        "function": "acceptTierNft",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
+      "txId": "send-sft-3-to-sc",
+      "tx": {
+        "from": "address:owner",
+        "to": "sc:donation",
+        "esdt": {
+          "tokenIdentifier": "str:TIERSFT-abcdef",
+          "nonce": "3",
+          "value": "1"
+        },
+        "function": "acceptTierNft",
+        "gasLimit": "1,000,000,000",
+        "gasPrice": "0"
+      },
+      "expect": {
+        "status": "0"
+      }
+    },
+    {
+      "step": "scCall",
       "txId": "donor1-mintTierNfts1",
       "tx": {
         "from": "address:donor1",
