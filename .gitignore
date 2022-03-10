@@ -1,3 +1,5 @@
 **/target/
 **/output/
 **/.DS_Store
+**/keyfile.json
+**/passfile.txt
