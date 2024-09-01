@@ -1,9 +1,9 @@
 #![no_std]
 
-elrond_wasm::imports!();
-elrond_wasm::derive_imports!();
+multiversx_sc::imports!();
+multiversx_sc::derive_imports!();
 
-#[elrond_wasm::contract]
+#[multiversx_sc::contract]
 pub trait Donation
 {
   #[init]
@@ -29,9 +29,9 @@ pub trait Donation
   fn init_minting(
     &self,
     collection_id: TokenIdentifier,
-    #[var_args] tier_thresholds: MultiValueManagedVec<BigUint>,
+    tier_thresholds: MultiValueManagedVec<BigUint>,
   ) {
-    self.collection().set_token_id(&collection_id);
+    self.collection().set_token_id(collection_id);
     self.tier_thresholds().set(&tier_thresholds.into_vec());
   }
 
@@ -125,7 +125,7 @@ pub trait Donation
   #[endpoint(acceptTierNft)]
   fn accept_tier_nft(
     &self,
-    #[payment_token] token_id: TokenIdentifier,
+    #[payment_token] token_id: EgldOrEsdtTokenIdentifier,
     #[payment_nonce] token_nonce: u64,
   ) {
     require!(token_id == self.collection().get_token_id(), "Invalid token id");
@@ -163,9 +163,9 @@ pub trait Donation
   #[only_owner]
   #[endpoint(sendEgldsToOwner)]
   fn send_eglds_to_owner(&self) {
-    let egld_id = TokenIdentifier::egld();
+    let egld_id = EgldOrEsdtTokenIdentifier::egld();
     let egld_amount = self.blockchain().get_sc_balance(&egld_id, 0);
-    self.send().direct(&self.blockchain().get_owner_address(), &egld_id, 0, &egld_amount, &[]);
+    self.send().direct(&self.blockchain().get_owner_address(), &egld_id, 0, &egld_amount);
   }
 
   #[only_owner]
@@ -183,7 +183,7 @@ pub trait Donation
   #[only_owner]
   #[endpoint(setTierThresholds)]
   fn set_tier_thresholds(&self,
-    #[var_args] tier_thresholds: MultiValueManagedVec<BigUint>
+    tier_thresholds: MultiValueManagedVec<BigUint>
   ) {
     self.tier_thresholds().set(&tier_thresholds.into_vec());
   }
@@ -311,7 +311,7 @@ pub enum MintingState {
   Active,
 }
 
-#[derive(TopEncode)]
+#[derive(TopEncode, TypeAbi)]
 pub struct DonationEvent<M: ManagedTypeApi> {
   donor_address: ManagedAddress<M>,
   donation: BigUint<M>,

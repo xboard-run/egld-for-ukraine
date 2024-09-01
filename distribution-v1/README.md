@@ -7,14 +7,14 @@ This folder contains:
 - the list of prizes in `prizes.json`,
 - the prizes distribution in `prizesDistribution.json`.
 
-If you want to regenerate by yourself these files, install [Node.js](https://nodejs.org) and [Yarn](https://yarnpkg.com), then run `yarn`.
+If you want to regenerate by yourself these files, install [Node.js](https://nodejs.org) and run `npm install`.
 
 ## Regenerate the list of donors
 
 Run:
 
 ```
-yarn download-donors
+npm run download-donors
 ```
 
 ## Regenerate donations breakdown
@@ -22,7 +22,7 @@ yarn download-donors
 Run:
 
 ```
-yarn breakdown-donations
+npm run breakdown-donations
 ```
 
 ## Regenerate the list of prizes
@@ -30,7 +30,7 @@ yarn breakdown-donations
 Run:
 
 ```
-yarn download-prizes
+npm run download-prizes
 ```
 
 ## Regenerate prizes distribution
@@ -38,5 +38,5 @@ yarn download-prizes
 Run:
 
 ```
-yarn distribute-prizes
+npm run distribute-prizes
 ```

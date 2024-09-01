@@ -1,14 +1,11 @@
 [package]
-name = "donation-abi"
+name = "donation-meta"
 version = "0.0.0"
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dependencies.donation]
 path = ".."
 
-[dependencies.elrond-wasm]
-version = "0.29.2"
-
-[dependencies.elrond-wasm-debug]
-version = "0.29.2"
+[dependencies.multiversx-sc-meta]
+version = "0.50.5"
