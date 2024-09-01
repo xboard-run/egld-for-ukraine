@@ -4,7 +4,7 @@ mxpy --verbose contract upgrade $sc_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \
-  --proxy="https://gateway.elrond.com" \
+  --proxy="https://gateway.multiversx.com" \
   --recall-nonce \
   --bytecode="sc-donation/output/donation.wasm" \
   --arguments 100000000000000000 3 \

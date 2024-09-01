@@ -4,7 +4,7 @@ mxpy --verbose contract call $sc_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \
-  --proxy="https://gateway.elrond.com" \
+  --proxy="https://gateway.multiversx.com" \
   --recall-nonce \
   --function=setDonationState \
   --arguments 1 \

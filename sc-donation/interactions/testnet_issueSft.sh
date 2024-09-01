@@ -14,7 +14,7 @@ mxpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \
-  --proxy="https://testnet-gateway.elrond.com" \
+  --proxy="https://testnet-gateway.multiversx.com" \
   --recall-nonce \
   --value 50000000000000000 \
   --function=issueSemiFungible \

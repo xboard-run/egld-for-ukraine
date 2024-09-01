@@ -17,7 +17,7 @@ mxpy --verbose contract call $owner_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \
-  --proxy="https://testnet-gateway.elrond.com" \
+  --proxy="https://testnet-gateway.multiversx.com" \
   --recall-nonce \
   --function=ESDTNFTCreate \
   --arguments $collection_id_enc 1 $nft_name_enc 0 0 $nft_attributes_enc $nft_png_uri_enc $nft_json_uri_enc \

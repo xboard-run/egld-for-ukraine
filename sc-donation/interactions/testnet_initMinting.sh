@@ -4,7 +4,7 @@ mxpy --verbose contract call $sc_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \
-  --proxy="https://testnet-gateway.elrond.com" \
+  --proxy="https://testnet-gateway.multiversx.com" \
   --recall-nonce \
   --function=initMinting \
   --arguments \

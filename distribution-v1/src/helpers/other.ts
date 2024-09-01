@@ -37,6 +37,6 @@ export const jsonParseBigint = (text: string) =>
       : value
   );
 
-const networkProxyUrl = "https://gateway.elrond.com";
+const networkProxyUrl = "https://gateway.multiversx.com";
 
 const Codec = new BinaryCodec();

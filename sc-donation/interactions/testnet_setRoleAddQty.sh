@@ -8,7 +8,7 @@ mxpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \
-  --proxy="https://testnet-gateway.elrond.com" \
+  --proxy="https://testnet-gateway.multiversx.com" \
   --recall-nonce \
   --function=setSpecialRole \
   --arguments $collection_id_enc $sc_address_enc $role_enc \
