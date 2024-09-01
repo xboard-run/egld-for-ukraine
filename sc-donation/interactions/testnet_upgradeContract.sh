@@ -1,6 +1,6 @@
 source interactions/settings_testnet.sh
 
-erdpy --verbose contract upgrade $sc_address \
+mxpy --verbose contract upgrade $sc_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \

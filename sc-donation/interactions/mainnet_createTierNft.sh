@@ -13,7 +13,7 @@ nft_attributes_enc="0x$(echo -n $nft_attributes | xxd -p -u | tr -d '\n')"
 nft_png_uri_enc="0x$(echo -n $nft_png_uri | xxd -p -u | tr -d '\n')"
 nft_json_uri_enc="0x$(echo -n $nft_json_uri | xxd -p -u | tr -d '\n')"
 
-erdpy --verbose contract call $owner_address \
+mxpy --verbose contract call $owner_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \

@@ -10,7 +10,7 @@ can_upgrade_enc="0x$(echo -n $can_upgrade | xxd -p -u | tr -d '\n')"
 can_add_special_roles_enc="0x$(echo -n $can_add_special_roles | xxd -p -u | tr -d '\n')"
 bool_true_enc="0x$(echo -n $bool_true | xxd -p -u | tr -d '\n')"
 
-erdpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u \
+mxpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \

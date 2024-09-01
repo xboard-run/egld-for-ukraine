@@ -1,4 +1,4 @@
-erdpy --verbose contract deploy \
+mxpy --verbose contract deploy \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \

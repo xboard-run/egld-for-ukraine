@@ -2,10 +2,10 @@ source interactions/settings_mainnet.sh
 
 role="ESDTRoleNFTCreate"
 
-owner_address_enc="0x$(erdpy wallet bech32 --decode $owner_address)"
+owner_address_enc="0x$(mxpy wallet bech32 --decode $owner_address)"
 role_enc="0x$(echo -n $role | xxd -p -u | tr -d '\n')"
 
-erdpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u \
+mxpy --verbose contract call erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="1" \

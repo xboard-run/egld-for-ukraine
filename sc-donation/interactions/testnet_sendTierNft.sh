@@ -4,7 +4,7 @@ method="acceptTierNft"
 
 method_enc="0x$(echo -n $method | xxd -p -u | tr -d '\n')"
 
-erdpy --verbose contract call $owner_address \
+mxpy --verbose contract call $owner_address \
   --keyfile="keyfile.json" \
   --passfile="passfile.txt" \
   --chain="T" \
